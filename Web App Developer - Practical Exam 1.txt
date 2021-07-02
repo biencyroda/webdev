@@ -1,0 +1,165 @@
+1. Loop
+A. Create a PHP function using WHILE loop that will sum all even numbers from 0-10.
+<?php 
+$x = 0;
+$sumeven = 0;
+while($x <= 10) {
+	if($x % 2 == 0){
+	
+		echo "The even number is: $x <br>";
+		$sumeven += $x;
+		
+	}
+		$x++;	
+}
+
+echo "Total sum of even number: ". $sumeven;
+
+?>
+
+
+B. Create a PHP function using DO WHILE loop that will display all odd numbers from 0-10.
+<?php 
+
+$x = 1;
+
+do {
+ 
+
+  if($x % 2 != 0){
+	   echo "The odd number is: $x <br>";
+  }
+    $x++;
+} while ($x <= 10);
+
+?>
+
+
+C. Create a PHP function using FOR loop that will display 10 numbers in fibonacci sequence.
+<?php 
+
+for ($x = 0; $x <= 10; $x++) {
+  echo "".fib($x)." <br>";
+}
+
+function fib($m){
+    $j=0;$k=1;
+    for($i=0;$i<=$m;$i++){
+          $l=$k;
+          $k=$j+$k;
+          $j=$l;
+      }
+   return $k;
+}
+?>
+
+
+2. Arrays
+
+A. Display the value that have the most number occurrence; in case of tie arrange it in
+alphabetical order.
+<?php 
+$array = ['Marvin', 'Marco', 'Marvin', 'Marco', 'Marco', 'Marvin', 'Christian'];
+
+$f = function ($s1, $s2) {
+   $n = strlen($s1) <=> strlen($s2);
+   if ($n != 0) {
+      return $n;
+   }
+   return $s1 <=> $s2;
+};
+usort($array, $f);
+print_r($array);	
+?>
+
+
+B. Sort the array in ascending order; if the value is an odd number, round it up to nearest tens.
+<?php 
+
+$array = [9863, 7127, 2020, 80, 131, 55, 100];
+foreach($array as $key => $value){
+	 if($value % 2 != 0){
+		 $number = ceil($value / 10) * 10;
+		 $array[ $key ] = $number;
+	 }
+}
+sort($array);
+
+echo "<pre>";
+print_r($array);
+echo "</pre>";
+?>
+
+C. Display the item that is not repetitive.
+<?php 
+
+$a= ["red", "blue", "black", "red", "blue", "blue", "red", "gold"];
+$a= array_unique($a);
+echo "<pre>";
+print_r($a);
+echo "</pre>";
+?>
+
+3. SQL
+
+A. Get all data of highest paid employee (without using LIMIT).
+SELECT *
+FROM employees EMP
+INNER JOIN salary SAL ON EMP.id=SAL.id 
+WHERE SAL.salary = (SELECT  MAX(SAL.salary) FROM salary) ;
+
+B. Get all employees that are hired from 2017-2018.
+SELECT * FROM employees WHERE date_hired >= '2017-01-01' AND date_hired <= '2018-12-31';
+
+C. Get all employees that belongs to IT department AND hired 2018 onwards.
+SELECT * FROM employees WHERE date_hired >= '2018-01-01' AND department_id = (SELECT id FROM departments WHERE department = "IT");
+
+
+
+4. Javascript
+
+A. Fix the sentence. (Capitalize the first word only and add spaces per word).
+Note: Assume that the string is a variable. TheQuickBrownFoxJumpsOverTheLazyDog.
+
+var s = ('TheQuickBrownFoxJumpsOverTheLazyDog.').replace(/([A-Z])/g, ' $1').trim();
+var string = capitalizeFirstLetter(lowercareall(s));
+function capitalizeFirstLetter(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+}
+function lowercareall(string) {
+    return string.toLowerCase();
+}
+console.log(string);
+
+B. Create a function that will parse and display the JSON values on a Contact FORM.
+(text field, radio button, checkbox)
+Note: Get only the first record order by lastName ASCENDING.
+URL: http://marvinv.local.com/exam/employees.php
+
+ var f = function(json){
+		var sortedInput = json['employees'].slice().sort((a, b) => b.id - a.id);
+		$('#contact-form text-field').val(sortedInput[0].firstName)
+		if(sortedInput[0].gender.female == true){
+			$('#contact-form radio-button#female').attr('checked','checked');
+		}
+		else{
+			$('#contact-form radio-button#male').attr('checked','checked');
+		}
+		if(sortedInput[0].knownLanguage.includes('English'))$('#contact-form checkbox#english').attr('checked','checked');
+		  if(sortedInput[0].knownLanguage.includes('Japanese'))$('#contact-form checkbox#janapanese').attr('checked','checked');
+	};
+$.ajax({
+    url: "http://marvinv.local.com/exam/employees.php",
+    type: "POST",
+    dataType: "json",
+    success: function(data){
+		f(data);
+    },
+    error: function(error){
+         console.log("Error:");
+         console.log(error);
+    }
+});
+
+
+
